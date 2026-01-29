@@ -1,10 +1,12 @@
 package net.itwaskairo.configurableanvils.mixin;
 
 import net.itwaskairo.configurableanvils.ConfigurableAnvilsConfig;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
@@ -12,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(value = AnvilMenu.class, priority = 1001)
+@Mixin(value = AnvilMenu.class, priority = 2000)
 public class AnvilMenuMixin {
 
     @Shadow private DataSlot cost;
@@ -73,6 +75,20 @@ public class AnvilMenuMixin {
     }
 
     @Inject(
+            method = "isValidBlock",
+            at = @At("TAIL"),
+            cancellable = true
+            )
+    private void noAnvilMenu(BlockState blockState, CallbackInfoReturnable<Boolean> cir) {
+        if (ConfigurableAnvilsConfig.SERVER.disableAnvils.get()) {
+            cir.setReturnValue(false);
+        }
+        else {
+            cir.setReturnValue(blockState.is(BlockTags.ANVIL));
+        }
+    }
+
+    @Inject(
             method = "createResult",
             at = @At(
                     value = "INVOKE",
@@ -80,12 +96,7 @@ public class AnvilMenuMixin {
             ),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void interceptRenameCost(CallbackInfo ci,
-                                     ItemStack itemstack,
-                                     int i,
-                                     int j,
-                                     int k
-    ) {
+    private void interceptRenameCost(CallbackInfo ci, ItemStack itemstack, int i, int j, int k) {
         if (k > 0 && i == k) {
             if (ConfigurableAnvilsConfig.SERVER.enableCustomRenamingCost.get()) {
                 this.cost.set(ConfigurableAnvilsConfig.SERVER.customRenamingCost.get());

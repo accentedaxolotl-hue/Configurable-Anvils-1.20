@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mixin(value = Minecraft.class, priority = 1002)
+@Mixin(value = Minecraft.class, priority = 1001)
 public class MinecraftStartupMixin {
 
     private static final Logger configurableAnvilsLogger = LogManager.getLogger("ConfigurableAnvils");

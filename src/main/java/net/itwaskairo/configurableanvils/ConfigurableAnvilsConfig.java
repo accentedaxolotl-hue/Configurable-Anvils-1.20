@@ -23,6 +23,7 @@ public class ConfigurableAnvilsConfig {
         public final ForgeConfigSpec.BooleanValue enableNoMaxCost;
         public final ForgeConfigSpec.BooleanValue enableCustomMaxNameLength;
         public final ForgeConfigSpec.BooleanValue enableCustomRenamingCost;
+        public final ForgeConfigSpec.BooleanValue disableAnvils;
 
         Server(ForgeConfigSpec.Builder builder) {
             builder.push("Configurable Anvils Values");
@@ -58,6 +59,10 @@ public class ConfigurableAnvilsConfig {
             enableCustomRenamingCost = builder
                     .comment("Enable anvils to have a fixed custom renaming cost")
                     .define("Custom Renaming Cost Toggle", true);
+
+            disableAnvils = builder
+                    .comment("Disable anvils altogether")
+                    .define("Disable Anvils Toggle", false);
 
             builder.pop();
         }

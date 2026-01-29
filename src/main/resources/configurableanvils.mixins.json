@@ -10,7 +10,8 @@
   ],
   "client": [
     "MinecraftStartupMixin",
-    "AnvilScreenMixin"
+    "AnvilScreenMixin",
+    "ScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
