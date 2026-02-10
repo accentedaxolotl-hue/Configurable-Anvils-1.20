@@ -21,6 +21,7 @@ public class ConfigurableAnvilsConfig {
         public final ForgeConfigSpec.IntValue customSharpnessCost;
         public final ForgeConfigSpec.IntValue customEfficiencyCost;
         public final ForgeConfigSpec.IntValue customMendingCost;
+        public final ForgeConfigSpec.IntValue customProtectionCost;
         public final ForgeConfigSpec.ConfigValue<Double> customCostGlobalModifier;
 
         public final ForgeConfigSpec.BooleanValue enableCustomEnchantCosts;
@@ -61,6 +62,10 @@ public class ConfigurableAnvilsConfig {
             customMendingCost = builder
                     .comment("A custom cost that will be used when enchanting an item with mending in an anvil.")
                     .defineInRange("Custom Mending Cost", 8, 0, 1000);
+
+            customProtectionCost = builder
+                    .comment("A custom cost that will be used (with scaling) when enchanting an item with protection in an anvil.")
+                    .defineInRange("Custom Protection Cost", 6, 0, 1000);
 
             builder.pop();
 

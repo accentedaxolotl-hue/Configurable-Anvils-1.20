@@ -115,6 +115,9 @@ public abstract class AnvilMenuMixin extends AbstractContainerMenu {
         if (enchantment == Enchantments.MENDING) {
             return ConfigurableAnvilsConfig.SERVER.customMendingCost.get();
         }
+        if (enchantment == Enchantments.ALL_DAMAGE_PROTECTION) {
+            return ConfigurableAnvilsConfig.SERVER.customProtectionCost.get();
+        }
         return 0;
     }
 
